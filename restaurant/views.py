@@ -9,6 +9,8 @@ from datetime import datetime
 from .forms import CommentForm
 from .forms import BookingForm
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 import json
 # from .forms import BookingForm
@@ -61,16 +63,64 @@ def menu(request):
     main_data = {"menu": menu_data}
     return render(request, 'menu.html', {"menu": main_data})
 
+@api_view(['GET', 'POST'])
+def menuItems(request):
+    return Response({
+  "menu_items": [
+    {
+      "name": "Cheeseburger",
+      "price": 8.99,
+      "category": "Burgers"
+    },
+    {
+      "name": "Margherita Pizza",
+      "price": 12.99,
+      "category": "Pizzas"
+    },
+    {
+      "name": "Caesar Salad",
+      "price": 6.49,
+      "category": "Salads"
+    }
+  ]
+}
+)
+    # if request.method == 'GET':
+    #     allItems = MenuItem.objects.all()
+    #     print("items: ", list(allItems.values()))
+    #     return Response({'items': list(allItems.values())})
+    # else:
+    #     serializedItem = MenuItemSerializer(data=request.data)
+    #     if (serializedItem.is_valid()):
+    #         print("saving the data: ", request.data)
+    #         serializedItem.save()
+    #         return Response({'statusa': "saved"})
+    #     else:
+    #         return Response({'error': "Incorrect format"})
 
+
+@api_view(['GET'])
+def categories (request):
+    return Response({
+  "categories": [
+    {
+      "name": "Burgers"
+    },
+    {
+      "name": "Pizzas"
+    },
+    {
+      "name": "Salads"
+    }
+  ]
+}
+)
 def display_menu_item(request, pk=None): 
     if pk: 
         menu_item = Menu.objects.get(pk=pk) 
     else: 
         menu_item = "" 
     return render(request, 'menu_item.html', {"menu_item": menu_item})
-
-
-
 
 def reservations(request):
     all_bookings = Booking.objects.all()
