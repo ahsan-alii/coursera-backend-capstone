@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div>
+  <h2>All Reservations</h2>
+  <hr>
+
+  {% for booking in all_bookings %}
+  <p>
+    <span>Name: </span>
+    <span> {{ booking.first_name }} </span>
+  </p>
+  <p>
+    <span>Date: </span>
+    <span> {{ booking.reservation_date }} </span>
+  </p>
+  <p>
+    <span>Slot: </span>
+    <span> {{ booking.reservation_slot }} </span>
+  </p>
+  <hr>
+  {% endfor %}
+</div>
+{% endblock %}
